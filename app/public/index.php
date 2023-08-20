@@ -9,7 +9,7 @@ if ((isset($uri[2]) && $uri[2] != 'user') || !isset($uri[3])) {
     exit();
 }
 
-require __DIR__ . "/../Controllers/Api/UserController.php";
+require __DIR__ . "/../Classes/Controllers/Api/UserController.php";
 $objFeedController = new UserController();
 $strMethodName = $uri[3] . 'Action';
 $objFeedController->{$strMethodName}();
