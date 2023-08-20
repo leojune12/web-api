@@ -1,4 +1,7 @@
 <?php
+
+use Classes\Controllers\Api\UserController;
+
 require __DIR__ . "/../bootstrap/bootstrap.php";
 
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);

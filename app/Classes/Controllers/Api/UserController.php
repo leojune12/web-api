@@ -1,4 +1,11 @@
 <?php
+
+namespace Classes\Controllers\Api;
+
+use Error;
+use BaseController;
+use Classes\Models\UserModel;
+
 class UserController extends BaseController
 {
     /** 
