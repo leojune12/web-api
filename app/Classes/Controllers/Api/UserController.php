@@ -3,10 +3,10 @@
 namespace Classes\Controllers\Api;
 
 use Error;
-use BaseController;
+use Controller;
 use Classes\Models\UserModel;
 
-class UserController extends BaseController
+class UserController extends Controller
 {
     /** 
 * "/user/list" Endpoint - Get list of users 

@@ -1,5 +1,5 @@
 <?php
-class BaseController
+class Controller
 {
     /** 
 * __call magic method. 
