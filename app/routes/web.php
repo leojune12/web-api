@@ -1,5 +1,6 @@
 <?php
 
+use Classes\Controllers\Api\BarangayController;
 use Classes\Foundation\Route;
 use Classes\Foundation\Request;
 use Classes\Controllers\Api\RegionController;
@@ -18,6 +19,8 @@ Route::get("regions", new RegionController, "index");
 Route::get("provinces", new ProvinceController, "index");
 
 Route::get("city-municipalities", new CityMunicipalityController, "index");
+
+Route::get("barangays", new BarangayController, "index");
 
 header("HTTP/1.1 404 Not Found");
 exit();
