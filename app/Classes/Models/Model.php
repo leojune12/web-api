@@ -8,6 +8,9 @@ use Exception;
 class Model
 {
     protected $connection = null;
+    public $table = null;
+    public $orderBy = ["id", "DESC"];
+    public $limit = null;
 
     public function __construct()
     {
@@ -42,13 +45,47 @@ class Model
             if($stmt === false) {
                 throw New Exception("Unable to do prepared statement: " . $query);
             }
-            if( $params ) {
-                $stmt->bind_param($params[0], $params[1]);
-            }
+            // if( $params ) {
+            //     $stmt->bind_param($params[0], $params[1]);
+            // }
             $stmt->execute();
             return $stmt;
         } catch(Exception $e) {
             throw New Exception( $e->getMessage() );
         }	
+    }
+
+    public function all($orderBy = "DESC") {
+        return Model::select(
+            "SELECT * FROM {$this->table} ORDER BY {$this->orderBy[0]} {$this->orderBy[1]} LIMIT {$this->limit}"
+        );
+    }
+
+    public function get($id, $column = 'id') {
+        return Model::select("SELECT * FROM {$this->table} WHERE {$column} = '$id'");
+    }
+
+    public function where($where = null) {
+        if (!isset($where) || count($where) != 3) {
+            throw new Exception("Invalid WHERE argument");
+        }
+
+        $query = "SELECT * FROM {$this->table}";
+        $query .= " WHERE {$where[0]} {$where[1]} '{$where[2]}'";
+
+        isset($this->limit)
+            ? $query .= " ORDER BY {$this->orderBy[0]} {$this->orderBy[1]} LIMIT {$this->limit}"
+            : $query .= " ORDER BY {$this->orderBy[0]} {$this->orderBy[1]}";
+
+        return Model::select($query);
+    }
+
+    public function limit($limit) {
+        $this->limit = $limit;
+    }
+
+    public function orderBy($orderBy = "id", $order = 'DESC') {
+        $this->orderBy[0] = $orderBy;
+        $this->orderBy[1] = $order;
     }
 }

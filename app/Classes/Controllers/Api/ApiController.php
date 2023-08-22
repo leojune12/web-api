@@ -11,6 +11,7 @@ class ApiController
     {
         $this->sendOutput('', array('HTTP/1.1 404 Not Found'));
     }
+
     /** 
     * Get URI elements. 
     * 
@@ -22,6 +23,7 @@ class ApiController
         $uri = explode( '/', $uri );
         return $uri;
     }
+
     /** 
     * Get querystring params. 
     * 
@@ -31,6 +33,7 @@ class ApiController
     {
         return parse_str($_SERVER['QUERY_STRING'], $query);
     }
+    
     /** 
     * Send API output. 
     * 
