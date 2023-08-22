@@ -9,7 +9,8 @@ class Model
 {
     protected $connection = null;
     public $table = null;
-    public $orderBy = ["id", "DESC"];
+    public $orderBy = "DESC";
+    public $orderByColumn = "id";
     public $limit = null;
 
     public function __construct()
@@ -55,9 +56,16 @@ class Model
         }	
     }
 
-    public function all($orderBy = "DESC") {
+    public function all() {
+
+        $query = "SELECT * FROM {$this->table} ORDER BY {$this->orderByColumn} {$this->orderBy}";
+
+        if (isset($this->limit)) {
+            $query .= " LIMIT {$this->limit}";
+        }
+        
         return Model::select(
-            "SELECT * FROM {$this->table} ORDER BY {$this->orderBy[0]} {$this->orderBy[1]} LIMIT {$this->limit}"
+            $query
         );
     }
 
@@ -74,8 +82,8 @@ class Model
         $query .= " WHERE {$where[0]} {$where[1]} '{$where[2]}'";
 
         isset($this->limit)
-            ? $query .= " ORDER BY {$this->orderBy[0]} {$this->orderBy[1]} LIMIT {$this->limit}"
-            : $query .= " ORDER BY {$this->orderBy[0]} {$this->orderBy[1]}";
+            ? $query .= " ORDER BY {$this->orderByColumn} {$this->orderBy} LIMIT {$this->limit}"
+            : $query .= " ORDER BY {$this->orderByColumn} {$this->orderBy}";
 
         return Model::select($query);
     }
@@ -84,8 +92,11 @@ class Model
         $this->limit = $limit;
     }
 
-    public function orderBy($orderBy = "id", $order = 'DESC') {
-        $this->orderBy[0] = $orderBy;
-        $this->orderBy[1] = $order;
+    public function orderBy($orderBy = "DESC") {
+        $this->orderBy = $orderBy;
+    }
+
+    public function orderByColumn($orderByColumn = "id") {
+        $this->orderByColumn = $orderByColumn;
     }
 }
