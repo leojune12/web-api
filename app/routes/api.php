@@ -14,13 +14,13 @@ if (!isset($uri[2])) {
     exit();
 }
 
-Route::get("regions", new RegionController, "index");
+Route::get("regions", RegionController::class, "index");
 
-Route::get("provinces", new ProvinceController, "index");
+Route::get("provinces", ProvinceController::class, "index");
 
-Route::get("city-municipalities", new CityMunicipalityController, "index");
+Route::get("city-municipalities", CityMunicipalityController::class, "index");
 
-Route::get("barangays", new BarangayController, "index");
+Route::get("barangays", BarangayController::class, "index");
 
 header("HTTP/1.1 404 Not Found");
 exit();
