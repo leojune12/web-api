@@ -102,7 +102,7 @@ class Model
     /** 
     * Add WHERE query
     */
-    public function orWhere($column, $operator, $value) {
+    public function where($column, $operator, $value) {
         array_push($this->where, [$column, $operator,$value]);
     }
 

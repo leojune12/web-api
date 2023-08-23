@@ -21,23 +21,23 @@ class ProvinceController extends ApiController
         
         // Additional query
         if (isset($request['id']) && $request['id']) {
-            $model->orWhere('id', "=", $request['id']);
+            $model->where('id', "=", $request['id']);
         }
 
         if (isset($request['psgcCode']) && $request['psgcCode']) {
-            $model->orWhere('psgcCode', "=", $request['psgcCode']);
+            $model->where('psgcCode', "=", $request['psgcCode']);
         }
 
         if (isset($request['regCode']) && $request['regCode']) {
-            $model->orWhere('regCode', "=", $request['regCode']);
+            $model->where('regCode', "=", $request['regCode']);
         }
 
         if (isset($request['provCode']) && $request['provCode']) {
-            $model->orWhere('provCode', "=", $request['provCode']);
+            $model->where('provCode', "=", $request['provCode']);
         }
 
         if (isset($request['provDesc']) && $request['provDesc']) {
-            $model->orWhere('provDesc', "=", $request['provDesc']);
+            $model->where('provDesc', "=", $request['provDesc']);
         }
 
         Response::return(json_encode($model->get()));
