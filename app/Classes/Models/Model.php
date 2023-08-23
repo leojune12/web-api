@@ -4,6 +4,7 @@ namespace Classes\Models;
 
 use mysqli;
 use Exception;
+use Classes\Foundation\Request;
 
 class Model
 {
@@ -12,6 +13,7 @@ class Model
     public $orderBy = "DESC";
     public $orderByColumn = "id";
     public $limit = null;
+    public $where = [];
 
     public function __construct()
     {
@@ -56,36 +58,41 @@ class Model
         }	
     }
 
-    public function all() {
+    public function get() {
 
-        $query = "SELECT * FROM {$this->table} ORDER BY {$this->orderByColumn} {$this->orderBy}";
+        $request = Request::request();
+
+        if (isset($request['limit']) && $request['limit']) {
+            $this->limit($request['limit']);
+        }
+
+        if (isset($request['order-by']) && $request['order-by']) {
+            $this->orderBy($request['order-by']);
+        }
+
+        if (isset($request['order-by-column']) && $request['order-by-column']) {
+            $this->orderByColumn($request['order-by-column']);
+        }
+
+        $query = "SELECT * FROM {$this->table}";
+
+        foreach ($this->where as $item) {
+            $query .= " WHERE {$item[0]} {$item[1]} {$item[2]}";
+        }
+
+        $query .= " ORDER BY {$this->orderByColumn} {$this->orderBy}";
 
         if (isset($this->limit)) {
             $query .= " LIMIT {$this->limit}";
         }
-        
+
         return Model::select(
             $query
         );
     }
 
-    public function get($id, $column = 'id') {
-        return Model::select("SELECT * FROM {$this->table} WHERE {$column} = '$id'");
-    }
-
-    public function where($where = null) {
-        if (!isset($where) || count($where) != 3) {
-            throw new Exception("Invalid WHERE argument");
-        }
-
-        $query = "SELECT * FROM {$this->table}";
-        $query .= " WHERE {$where[0]} {$where[1]} '{$where[2]}'";
-
-        isset($this->limit)
-            ? $query .= " ORDER BY {$this->orderByColumn} {$this->orderBy} LIMIT {$this->limit}"
-            : $query .= " ORDER BY {$this->orderByColumn} {$this->orderBy}";
-
-        return Model::select($query);
+    public function orWhere($column, $operator, $value) {
+        array_push($this->where, [$column, $operator,$value]);
     }
 
     public function limit($limit) {
