@@ -14,18 +14,34 @@ class CityMunicipalityController extends ApiController
 
         $model = new CityMunicipality();
         
-        if (isset($request['limit']) && $request['limit']) {
-            $model->limit($request['limit']);
+        if (isset($request['id']) && $request['id']) {
+            $model->orWhere('id', "=", $request['id']);
         }
 
-        if (isset($request['order-by']) && $request['order-by']) {
-            $model->orderBy($request['order-by']);
+        if (isset($request['psgcCode']) && $request['psgcCode']) {
+            $model->orWhere('psgcCode', "=", $request['psgcCode']);
         }
 
-        if (isset($request['order-by-column']) && $request['order-by-column']) {
-            $model->orderByColumn($request['order-by-column']);
+        if (isset($request['regCode']) && $request['regCode']) {
+            $model->orWhere('regCode', "=", $request['regCode']);
         }
 
-        Response::return(json_encode($model->all()));
+        if (isset($request['provCode']) && $request['provCode']) {
+            $model->orWhere('provCode', "=", $request['provCode']);
+        }
+
+        if (isset($request['citymunCode']) && $request['citymunCode']) {
+            $model->orWhere('citymunCode', "=", $request['citymunCode']);
+        }
+
+        if (isset($request['citymunDesc']) && $request['citymunDesc']) {
+            $model->orWhere('citymunDesc', "=", $request['citymunDesc']);
+        }
+
+        if (isset($request['zipCode']) && $request['zipCode']) {
+            $model->orWhere('zipCode', "=", $request['zipCode']);
+        }
+
+        Response::return(json_encode($model->get()));
     }
 }
