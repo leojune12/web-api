@@ -9,11 +9,17 @@ use Classes\Controllers\Api\ApiController;
 
 class BarangayController extends ApiController
 {
+    /**
+     * Returns a list of requested data
+     * 
+     * @return array
+    */
     public function index() {
         $request = Request::request();
 
         $model = new Barangay();
         
+        // Additional query
         if (isset($request['id']) && $request['id']) {
             $model->orWhere('id', "=", $request['id']);
         }

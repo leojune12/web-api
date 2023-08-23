@@ -17,7 +17,7 @@ class Request
     }
 
     /** 
-    * Get querystring params. 
+    * Get querystring parameters
     * 
     * @return array 
     */

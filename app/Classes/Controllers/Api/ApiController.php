@@ -5,7 +5,8 @@ namespace Classes\Controllers\Api;
 class ApiController
 {
     /** 
-    * __call magic method. 
+    * __call magic method.
+    * Called if no method name matches
     */
     public function __call($name, $arguments)
     {

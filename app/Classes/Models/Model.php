@@ -28,6 +28,9 @@ class Model
         }			
     }
 
+    /** 
+    * Get result from query 
+    */
     public function select($query = "" , $params = [])
     {
         try {
@@ -41,6 +44,9 @@ class Model
         return false;
     }
 
+    /** 
+    * Execute query statement
+    */
     private function executeStatement($query = "" , $params = [])
     {
         try {
@@ -48,9 +54,6 @@ class Model
             if($stmt === false) {
                 throw New Exception("Unable to do prepared statement: " . $query);
             }
-            // if( $params ) {
-            //     $stmt->bind_param($params[0], $params[1]);
-            // }
             $stmt->execute();
             return $stmt;
         } catch(Exception $e) {
@@ -58,8 +61,12 @@ class Model
         }	
     }
 
+    /** 
+    * Build the query statement
+    */
     public function get() {
 
+        // Get request arguments
         $request = Request::request();
 
         if (isset($request['limit']) && $request['limit']) {
@@ -76,33 +83,46 @@ class Model
 
         $query = "SELECT * FROM {$this->table}";
 
+        // Add WHERE queries if any
         foreach ($this->where as $item) {
             $query .= " WHERE {$item[0]} {$item[1]} {$item[2]}";
         }
 
+        // Add order by query
         $query .= " ORDER BY {$this->orderByColumn} {$this->orderBy}";
 
+        // Add limit query
         if (isset($this->limit)) {
             $query .= " LIMIT {$this->limit}";
         }
 
-        return Model::select(
-            $query
-        );
+        return Model::select($query);
     }
 
+    /** 
+    * Add WHERE query
+    */
     public function orWhere($column, $operator, $value) {
         array_push($this->where, [$column, $operator,$value]);
     }
 
+    /** 
+    * Add limit query
+    */
     public function limit($limit) {
         $this->limit = $limit;
     }
 
+    /** 
+    * Add orderBy query
+    */
     public function orderBy($orderBy = "DESC") {
         $this->orderBy = $orderBy;
     }
 
+    /** 
+    * Add orderByColumn query
+    */
     public function orderByColumn($orderByColumn = "id") {
         $this->orderByColumn = $orderByColumn;
     }

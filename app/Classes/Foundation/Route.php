@@ -8,6 +8,9 @@ use Classes\Foundation\Response;
 
 class Route
 {
+    /** 
+    * GET route method
+    */
     public static function get($uri_for, $controllerName, $method) {
         $uri_for_array = explode('/', $uri_for);
         $uri = Request::uriSegments();

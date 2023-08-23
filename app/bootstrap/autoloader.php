@@ -1,5 +1,6 @@
 <?php
 
+// Autoload classes
 function autoload($className)
 {
     $extension =  spl_autoload_extensions();

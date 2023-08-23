@@ -4,6 +4,9 @@ namespace Classes\Foundation;
 
 class Response
 {
+    /** 
+    * Return response
+    */
     public static function return($data, $httpHeaders = [
         'Content-Type: application/json',
         'HTTP/1.1 200 OK', 'Access-Control-Allow-Origin: *'
